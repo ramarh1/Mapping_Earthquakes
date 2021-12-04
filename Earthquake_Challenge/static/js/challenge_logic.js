@@ -30,7 +30,7 @@ let baseMaps = {
 
 // 1. Add a 2nd layer group for the tectonic plate data.
 let allEarthquakes = new L.LayerGroup();
-let tectonicPlates = new.L.LayerGroup();
+let tectonicPlates = new L.LayerGroup();
 
 // 2. Add a reference to the tectonic plates group to the overlays object.
 let overlays = {
@@ -41,6 +41,9 @@ let overlays = {
 // Then we add a control to the map that will allow the user to change which
 // layers are visible.
 L.control.layers(baseMaps, overlays).addTo(map);
+
+// Tectonic plate data url
+let tectonic_data = "https://raw.githubusercontent.com/ramarh1/Mapping_Earthquakes/main/PB2002_boundaries.json";
 
 // Retrieve the earthquake GeoJSON data.
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
@@ -140,20 +143,21 @@ legend.onAdd = function() {
   // Finally, we our legend to the map.
   legend.addTo(map);
 
+});
 
   // 3. Use d3.json to make a call to get our Tectonic Plate geoJSON data.
-  d3.json("https://raw.githubusercontent.com/ramarh1/Mapping_Earthquakes/main/torontoNeighborhoods.json").then(function(data) {
+    d3.json(tectonic_data).then(function(data) {
     
-    L.geoJSON(data, {
+    L.geoJSON(data,{
         style: {
             color: "#ea2c2c",
-            weight: 1
+            weight: 2
         }
         
+    
     }).addTo(tectonicPlates);
 
     tectonicPlates.addTo(map);
 
   });
     
-  
